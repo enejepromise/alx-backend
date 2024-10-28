@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 ''' A function that takes two integer '''
 from typing import Tuple
+
+
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
     ''' simple helper function '''
     start_index = (page - 1) * page_size
