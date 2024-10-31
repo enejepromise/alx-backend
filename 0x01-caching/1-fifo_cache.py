@@ -1,14 +1,17 @@
-#!/usr/bin/env python3
-''' A python Module '''
-base_caching = __import__('base_caching').BaseCaching
-from collection import OrderedDict
+#!/usr/bin/python3
+''' A Python3 Module '''
+
+from base_caching import BaseCaching
+# base_caching = __import__('base_caching').BaseCaching
+from collections import OrderedDict
+
 
 class FIFOCache(BaseCaching):
-    ''' inheriting from BaseCaching and a system caching '''
+    ''' inherits from BaseCaching and is a caching system '''
     def __init__(self):
-        ''' Instance of the class '''
+        ''' instance of the class '''
         super().__init__()
-        self.cache.data = OrderedDict()
+        self.cache_data = OrderedDict()
 
     def put(self, key, item):
         ''' put method '''
@@ -16,6 +19,8 @@ class FIFOCache(BaseCaching):
             return
         self.cache_data[key] = item
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            first_item, _ = self.cache_data.popitem(false)
-            print(DISCARD
+            first_item, _ = self.cache_data.popitem(False)
+            print("DISCARD:", first_item)
 
+    def get(self, key):
+        ''' get method '''
