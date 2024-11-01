@@ -1,11 +1,11 @@
+
 #!/usr/bin/env python3
 """
 Deletion-resilient hypermedia pagination
 """
 
 import csv
-import math
-from typing import List, Dict, Optional
+from typing import List, Dict
 
 
 class Server:
@@ -43,7 +43,6 @@ class Server:
         """Deletion-resilient hypermedia data retrieval
         """
         indexed_data = self.indexed_dataset()
-        valid_keys = sorted(indexed_data.keys())
         total_size = len(indexed_data)
 
         if index is None:
@@ -51,15 +50,15 @@ class Server:
 
         assert 0 <= index < total_size
 
-        end = index + page_size
+        page = []
 
-        page = [
-            indexed_data.get(valid_keys[i])
-            for i in range(index, end)
-            if i < total_size
-        ]
+        for key, val in indexed_data.items():
+            if key >= index and len(page) < page_size:
+                page.append(val)
+            if len(page) == page_size:
+                break
 
-        next_index = end if end < total_size else None
+        next_index = key + 1 if key < total_size - 1 else None
 
         return {
             "index": index,
